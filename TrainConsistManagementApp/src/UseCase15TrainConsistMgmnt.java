@@ -1,0 +1,53 @@
+public class UseCase15TrainConsistMgmnt {
+
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
+            super(message);
+        }
+    }
+
+    static class GoodsBogie {
+        String shape;
+        String cargo;
+
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        void assignCargo(String cargo) {
+            try {
+                if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe cargo assignment!");
+                }
+                this.cargo = cargo;
+                System.out.println("Cargo assigned successfully -> " + cargo);
+            } catch (CargoSafetyException e) {
+                System.out.println("Error: " + e.getMessage());
+            } finally {
+                System.out.println("Cargo validation completed for " + shape + " bogie");
+                System.out.println();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        displayHeader();
+
+        GoodsBogie b1 = new GoodsBogie("Cylindrical");
+        b1.assignCargo("Petroleum");
+
+        GoodsBogie b2 = new GoodsBogie("Rectangular");
+        b2.assignCargo("Petroleum");
+
+        completionMessage();
+    }
+
+    static void displayHeader() {
+        System.out.println("UC15 - Safe Cargo Assignment");
+        System.out.println();
+    }
+
+    static void completionMessage() {
+        System.out.println("UC15 runtime handling completed ...");
+    }
+}
